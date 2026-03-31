@@ -1,0 +1,38 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Booking {
+  id            String     @id @default(cuid())
+  firstName     String
+  lastName      String
+  email         String
+  phone         String
+  sessionType   String
+  startTime     DateTime
+  endTime       DateTime
+  googleEventId String?
+  meetLink      String?
+  status        String     @default("confirmed")
+  createdAt     DateTime   @default(now())
+  reminders     Reminder[]
+}
+
+model Reminder {
+  id        String   @id @default(cuid())
+  bookingId String
+  booking   Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  sendAt    DateTime
+  type      String
+  sent      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
