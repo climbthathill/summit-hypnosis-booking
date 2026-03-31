@@ -4,6 +4,7 @@ import { addMinutes, startOfDay, addDays, addHours } from "date-fns";
 const BUSINESS_START = { hour: 10, minute: 15 };
 const BUSINESS_END = { hour: 17, minute: 0 };
 const SESSION_DURATION_MINUTES = 60;
+const SLOT_INTERVAL_MINUTES = 15;
 const MIN_ADVANCE_HOURS = 20;
 
 // Days 0=Sun, 1=Mon, ..., 5=Fri, 6=Sat
@@ -42,7 +43,7 @@ export function getAvailableSlots(
       }
     }
 
-    current = addMinutes(current, SESSION_DURATION_MINUTES);
+    current = addMinutes(current, SLOT_INTERVAL_MINUTES);
   }
 
   return slots;
